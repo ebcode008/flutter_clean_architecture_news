@@ -2,12 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_clean_architecture_01/core/router/app_router.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/domain/entities/article.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/presentation/bloc/remote/news_article_bloc.dart';
-import 'package:flutter_clean_architecture_01/features/daily_news/presentation/pages/article_detail_page.dart';
-import 'package:flutter_clean_architecture_01/features/daily_news/presentation/pages/saved_articles_page.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/presentation/widgets/article_tile.dart';
 import 'package:flutter_clean_architecture_01/injection_container.dart';
+import 'package:go_router/go_router.dart';
 
 class NewsArticlePage extends StatelessWidget {
   const NewsArticlePage({super.key});
@@ -33,10 +33,9 @@ class NewsArticlePage extends StatelessWidget {
         IconButton(
           icon: const Icon(Icons.favorite, color: Colors.black),
           onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SavedArticlesPage()),
-            ).then((result) => context.read<NewsArticleBloc>().add(OnNewsArticleEvent()));
+            context.pushNamed(AppRoutes.savedArticles).then((result) {
+              context.read<NewsArticleBloc>().add(OnNewsArticleEvent());
+            });
           },
         ),
       ],
@@ -77,7 +76,9 @@ class NewsArticlePage extends StatelessWidget {
               return ArticleTile(
                 article: article,
                 onTap: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (_) => ArticleDetailPage(article: article)));
+                  context.pushNamed(AppRoutes.articleDetail, extra: article).then((result) {
+                    context.read<NewsArticleBloc>().add(OnNewsArticleEvent());
+                  });
                 },
               );
             },

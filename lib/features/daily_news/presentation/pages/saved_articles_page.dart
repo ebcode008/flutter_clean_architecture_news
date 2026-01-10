@@ -2,11 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_clean_architecture_01/core/router/app_router.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/domain/entities/article.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/presentation/bloc/local/saved_article_bloc.dart';
-import 'package:flutter_clean_architecture_01/features/daily_news/presentation/pages/article_detail_page.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/presentation/widgets/article_tile.dart';
 import 'package:flutter_clean_architecture_01/injection_container.dart';
+import 'package:go_router/go_router.dart';
 
 class SavedArticlesPage extends StatelessWidget {
   const SavedArticlesPage({super.key});
@@ -65,10 +66,9 @@ class SavedArticlesPage extends StatelessWidget {
               return ArticleTile(
                 article: article,
                 onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => ArticleDetailPage(article: article)),
-                  ).then((result) => context.read<SavedArticleBloc>().add(OnSavedArticleEvent()));
+                  context.pushNamed(AppRoutes.articleDetail, extra: article).then((result) {
+                    context.read<SavedArticleBloc>().add(OnSavedArticleEvent());
+                  });
                 },
               );
             },

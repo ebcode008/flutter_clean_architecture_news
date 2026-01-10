@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_clean_architecture_01/core/router/app_router.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/presentation/bloc/local/saved_article_bloc.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/presentation/bloc/remote/article_detail_bloc.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/presentation/bloc/remote/news_article_bloc.dart';
-import 'package:flutter_clean_architecture_01/features/daily_news/presentation/pages/news_article_page.dart';
 import 'package:flutter_clean_architecture_01/injection_container.dart';
 import 'package:get_it/get_it.dart';
 
@@ -24,7 +24,7 @@ class MainApp extends StatelessWidget {
         BlocProvider(create: (context) => GetIt.instance.get<SavedArticleBloc>()),
         BlocProvider(create: (context) => GetIt.instance.get<ArticleDetailBloc>()),
       ],
-      child: const MaterialApp(debugShowCheckedModeBanner: false, home: NewsArticlePage()),
+      child: MaterialApp.router(title: 'News App', debugShowCheckedModeBanner: false, routerConfig: router),
     );
   }
 }
