@@ -13,5 +13,5 @@ class ArticleDetailLoaded extends ArticleDetailState {
 class ArticleDetailFailure extends ArticleDetailState {
   final Failure failure;
 
-  ArticleDetailFailure(this.failure);
+  ArticleDetailFailure({required this.failure});
 }

@@ -13,28 +13,41 @@ class ArticleDetailPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ArticleDetailBloc(getIt(), getIt())..add(InitArticleDetail(article)),
+      create: (context) => ArticleDetailBloc(getIt(), getIt(), getIt())..add(InitArticleDetail(article)),
       child: BlocBuilder<ArticleDetailBloc, ArticleDetailState>(
         builder: (context, state) {
-          return Scaffold(appBar: _buildAppBar(context), body: _buildBody(state), backgroundColor: Colors.white);
+          return Scaffold(appBar: _buildAppBar(context, state), body: _buildBody(state), backgroundColor: Colors.white);
         },
       ),
     );
   }
 
-  PreferredSizeWidget _buildAppBar(BuildContext context) {
+  PreferredSizeWidget _buildAppBar(BuildContext context, ArticleDetailState state) {
+    if (state is ArticleDetailLoaded) {
+      return AppBar(
+        elevation: 0.0,
+        centerTitle: true,
+        backgroundColor: Colors.white,
+        actions: [
+          IconButton(
+            icon: Icon((state.article.favorite == true) ? Icons.favorite : Icons.favorite_border, color: Colors.black),
+            onPressed: () {
+              if (state.article.favorite == true) {
+                context.read<ArticleDetailBloc>().add(OnDeleteArticle(article));
+              } else {
+                context.read<ArticleDetailBloc>().add(OnSaveArticle(article));
+              }
+            },
+          ),
+        ],
+        title: const Text('Article', style: TextStyle(color: Colors.black)),
+      );
+    }
+
     return AppBar(
       elevation: 0.0,
       centerTitle: true,
       backgroundColor: Colors.white,
-      actions: [
-        IconButton(
-          icon: const Icon(Icons.favorite_border, color: Colors.black),
-          onPressed: () {
-            context.read<ArticleDetailBloc>().add(OnSaveArticle(article));
-          },
-        ),
-      ],
       title: const Text('Article', style: TextStyle(color: Colors.black)),
     );
   }

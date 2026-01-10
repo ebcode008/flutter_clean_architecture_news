@@ -7,6 +7,7 @@ abstract class ArticleLocalDataSource {
   Future<List<Article>> getSavedArticles();
   Future<bool> saveArticle(Article article);
   Future<bool> deleteArticle(Article article);
+  Future<Article> getSavedArticle(String title);
 }
 
 class ArticleLocalDataSourceImpl implements ArticleLocalDataSource {
@@ -41,6 +42,21 @@ class ArticleLocalDataSourceImpl implements ArticleLocalDataSource {
       Box<dynamic> box = await Hive.openBox('articles');
       await box.delete(article.title);
       return true;
+    } catch (err) {
+      throw LocalFailure();
+    }
+  }
+
+  @override
+  Future<Article> getSavedArticle(String title) async {
+    try {
+      Box<dynamic> box = await Hive.openBox('articles');
+
+      final data = box.get(title);
+
+      if (data == null) throw LocalFailure();
+
+      return ArticleModel.fromJson(Map<String, dynamic>.from(data));
     } catch (err) {
       throw LocalFailure();
     }

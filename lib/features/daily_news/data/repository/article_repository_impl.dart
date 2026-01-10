@@ -60,4 +60,15 @@ class ArticleRepositoryImpl implements ArticleRepository {
       return Left(LocalFailure());
     }
   }
+
+  @override
+  Future<Either<Failure, Article>> getSavedArticle(String title) async {
+    try {
+      final Article resp = await articleLocalDataSource.getSavedArticle(title);
+      return Right(resp);
+    } catch (err) {
+      debugPrint(err.toString());
+      return Left(LocalFailure());
+    }
+  }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_clean_architecture_01/features/daily_news/data/repositor
 import 'package:flutter_clean_architecture_01/features/daily_news/domain/repository/article_repository.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/domain/use_cases/delete_article.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/domain/use_cases/get_news_article.dart';
+import 'package:flutter_clean_architecture_01/features/daily_news/domain/use_cases/get_saved_article.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/domain/use_cases/get_saved_articles.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/domain/use_cases/save_article.dart';
 import 'package:flutter_clean_architecture_01/features/daily_news/presentation/bloc/local/saved_article_bloc.dart';
@@ -17,13 +18,14 @@ Future<void> initializeDependencies() async {
   //Blocs
   getIt.registerFactory(() => NewsArticleBloc(getIt()));
   getIt.registerFactory(() => SavedArticleBloc(getIt()));
-  getIt.registerFactory(() => ArticleDetailBloc(getIt(), getIt()));
+  getIt.registerFactory(() => ArticleDetailBloc(getIt(), getIt(), getIt()));
 
   //UseCases
   getIt.registerLazySingleton(() => SaveArticleUseCase(getIt()));
   getIt.registerLazySingleton(() => DeleteArticleUseCase(getIt()));
   getIt.registerLazySingleton(() => GetNewsArticlesUseCase(getIt()));
   getIt.registerLazySingleton(() => GetSavedArticlesUseCase(getIt()));
+  getIt.registerLazySingleton(() => GetSavedArticleUseCase(getIt()));
 
   //Repository
   getIt.registerLazySingleton<ArticleRepository>(

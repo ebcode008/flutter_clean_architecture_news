@@ -15,7 +15,5 @@ class NewsArticleBloc extends Bloc<NewsArticleEvent, NewsArticleState> {
 
       resp.fold((f) => emit(NewsArticleFailure(failure: f)), (a) => emit(NewsArticleLoaded(articles: a)));
     });
-
-    add(OnNewsArticleEvent());
   }
 }

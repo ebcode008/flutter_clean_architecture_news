@@ -15,7 +15,5 @@ class SavedArticleBloc extends Bloc<SavedArticleEvent, SavedArticleState> {
 
       resp.fold((f) => emit(SavedArticleFailure(failure: f)), (a) => emit(SavedArticleLoaded(articles: a)));
     });
-
-    add(OnSavedArticleEvent());
   }
 }

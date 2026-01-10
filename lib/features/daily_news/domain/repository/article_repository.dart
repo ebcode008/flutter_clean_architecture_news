@@ -7,4 +7,5 @@ abstract class ArticleRepository {
   Future<Either<Failure, List<Article>>> getSavedArticles();
   Future<Either<Failure, bool>> saveArticle(Article article);
   Future<Either<Failure, bool>> deleteArticle(Article article);
+  Future<Either<Failure, Article>> getSavedArticle(String title);
 }
