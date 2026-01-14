@@ -11,16 +11,20 @@ class AppRoutes {
 }
 
 final GoRouter router = GoRouter(
-  initialLocation: '/news-articles',
+  initialLocation: '/${AppRoutes.newsArticles}',
   routes: [
-    GoRoute(path: '/news-articles', name: AppRoutes.newsArticles, builder: (context, state) => const NewsArticlePage()),
     GoRoute(
-      path: '/saved-articles',
+      path: '/${AppRoutes.newsArticles}',
+      name: AppRoutes.newsArticles,
+      builder: (context, state) => const NewsArticlePage(),
+    ),
+    GoRoute(
+      path: '/${AppRoutes.savedArticles}',
       name: AppRoutes.savedArticles,
       builder: (context, state) => const SavedArticlesPage(),
     ),
     GoRoute(
-      path: '/article-detail',
+      path: '/${AppRoutes.articleDetail}',
       name: AppRoutes.articleDetail,
       builder: (context, state) {
         final article = state.extra as Article;
