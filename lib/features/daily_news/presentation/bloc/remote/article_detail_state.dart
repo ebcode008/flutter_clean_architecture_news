@@ -1,6 +1,6 @@
 part of 'article_detail_bloc.dart';
 
-abstract class ArticleDetailState {}
+sealed class ArticleDetailState {}
 
 class ArticleDetailLoading extends ArticleDetailState {}
 
